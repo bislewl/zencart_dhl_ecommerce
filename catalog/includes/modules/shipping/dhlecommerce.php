@@ -67,7 +67,7 @@ class dhlecommerce extends base {
         $this->code = 'dhlecommerce';
         $this->title = MODULE_SHIPPING_DHL_ECOMM_TEXT_TITLE;
         $this->description = MODULE_SHIPPING_DHL_ECOMM_TEXT_DESCRIPTION;
-        $this->sort_order = MODULE_SHIPPING_DHL_SORT_ORDER;
+        $this->sort_order = MODULE_SHIPPING_DHL_ECOMM_SORT_ORDER;
         $this->icon = $template->get_template_dir('shipping_dhl.gif', DIR_WS_TEMPLATE, $current_page_base, 'images/icons') . '/' . 'shipping_dhl.gif';
         $this->tax_class = MODULE_SHIPPING_DHL_ECOMM_TAX_CLASS;
         $this->tax_basis = MODULE_SHIPPING_DHL_ECOMM_TAX_BASIS;
@@ -199,7 +199,8 @@ class dhlecommerce extends base {
     function install() {
         global $db;
         $db->Execute("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, date_added) values ('Enable DHL eCommerce Shipping', 'MODULE_SHIPPING_DHL_ECOMM_STATUS', 'True', 'Do you want to offer DHL eCommerce shipping?', '6', '0', 'zen_cfg_select_option(array(\'True\', \'False\'), ', now())");
-        $db->Execute("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('DHL eCommerce Version', 'MODULE_SHIPPING_DHL_ECOMM_VERSION', '1.1.0', '', '6', '0', now())");
+        $db->Execute("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('DHL eCommerce Version', 'MODULE_SHIPPING_DHL_ECOMM_VERSION', '1.1.1', '', '6', '0', now())");
+        $db->Execute("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Sort order of display.', 'MODULE_SHIPPING_DHL_ECOMM_SORT_ORDER', '4', 'Sort order of display. Lowest is displayed first.', '6', '0', now())");
         $db->Execute("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, date_added) values ('Handling Per Order or Per Box', 'MODULE_SHIPPING_DHL_ECOMM_HANDLING_METHOD', 'Box', 'Do you want to charge Handling Fee Per Order or Per Box?', '6', '3', 'zen_cfg_select_option(array(\'Order\', \'Box\'), ', now())");
         $db->Execute("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, use_function, set_function, date_added) values ('Tax Class', 'MODULE_SHIPPING_DHL_ECOMM_TAX_CLASS', '0', 'Use the following tax class on the shipping fee.', '6', '4', 'zen_get_tax_class_title', 'zen_cfg_pull_down_tax_classes(', now())");
         $db->Execute("INSERT INTO " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, date_added) values ('Tax Basis', 'MODULE_SHIPPING_DHL_ECOMM_TAX_BASIS', 'Shipping', 'On what basis is Shipping Tax calculated. Options are<br />Shipping - Based on customers Shipping Address<br />Billing Based on customers Billing address<br />Store - Based on Store address if Billing/Shipping Zone equals Store zone', '6', '5', 'zen_cfg_select_option(array(\'Shipping\', \'Billing\', \'Store\'), ', now())");
@@ -256,7 +257,7 @@ class dhlecommerce extends base {
      * @return array
      */
     function keys() {
-        $keys = array('MODULE_SHIPPING_DHL_ECOMM_STATUS', 'MODULE_SHIPPING_DHL_ECOMM_VERSION', 'MODULE_SHIPPING_DHL_ECOMM_HANDLING_METHOD', 'MODULE_SHIPPING_DHL_ECOMM_TAX_CLASS', 'MODULE_SHIPPING_DHL_ECOMM_TAX_BASIS', 'MODULE_SHIPPING_DHL_ECOMM_DUTIABLE','MODULE_SHIPPING_DHL_ECOMM_TERMINAL');
+        $keys = array('MODULE_SHIPPING_DHL_ECOMM_STATUS', 'MODULE_SHIPPING_DHL_ECOMM_VERSION', 'MODULE_SHIPPING_DHL_ECOMM_HANDLING_METHOD', 'MODULE_SHIPPING_DHL_ECOMM_TAX_CLASS', 'MODULE_SHIPPING_DHL_ECOMM_TAX_BASIS', 'MODULE_SHIPPING_DHL_ECOMM_DUTIABLE','MODULE_SHIPPING_DHL_ECOMM_TERMINAL','MODULE_SHIPPING_DHL_ECOMM_SORT_ORDER');
         foreach ($this->ecomm_methods as $ecomm_method) {
             $keys[] = 'MODULE_SHIPPING_DHL_ECOMM_ENABLED_' . $ecomm_method;
         }
